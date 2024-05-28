@@ -1,4 +1,5 @@
 class Solution {
+    // update test
     public int equalSubstring(String s, String t, int maxCost) {
         int N=s.length();
         int[] arr = new int[N+1];
