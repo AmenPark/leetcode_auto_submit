@@ -1,15 +1,23 @@
 class Solution:
     def maximumValueSum(self, nums: List[int], k: int, edges: List[List[int]]) -> int:
         S = sum(nums)
-        diffs = [(x^k)-x for x in nums]
-        diffs.sort()
-        while len(diffs)>1:
-            if diffs[-2] >= 0:
-                S+=diffs.pop()
-                S+=diffs.pop()
+        mDiff = -k
+        MDiff = k
+        ct = 0
+        flag=False
+        for x in nums:
+            diff = (x^k) - x
+            if diff >= 0:
+                S += diff
+                MDiff = min(MDiff, diff)
+                ct^=1
             else:
-                break
-        ans = S
-        if len(diffs)>1:
-            ans = max(ans, ans+diffs[-1]+diffs[-2])
+                mDiff=max(mDiff,diff)
+                flag=True
+        if ct:
+            ans = S-MDiff
+            if flag:
+                ans = max(ans, S+mDiff)
+        else:
+            ans = S
         return ans
