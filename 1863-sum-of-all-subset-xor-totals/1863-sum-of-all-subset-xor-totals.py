@@ -11,6 +11,6 @@ class Solution:
             if ct==0:
                 i<<=1
                 continue
-            ans += i <<(N-1)
+            ans += i 
             i<<=1
-        return ans
+        return ans<<(N-1)
