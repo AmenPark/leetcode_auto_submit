@@ -1,13 +1,18 @@
 class Solution:
     def equalSubstring(self, s: str, t: str, maxCost: int) -> int:
-        hq = []
+        q=[0]
+        ss=0
         for x,y in zip(s,t):
-            heapq.heappush(hq, abs(ord(x)-ord(y)))
-        c = 0
+            ss+=abs(ord(x)-ord(y))
+            q.append(ss)
+        N = len(q)
+        l=0
         ans = 0
-        while hq:
-            c+= heapq.heappop(hq)
-            if c>maxCost:
-                break
-            ans+=1
+        r=1
+        while r<N:
+            if q[r] - q[l] <=maxCost:
+                ans=max(ans,r-l)
+                r+=1
+            else:
+                l+=1
         return ans
