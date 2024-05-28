@@ -7,7 +7,7 @@ class Solution:
         flag=False
         for x in nums:
             diff = (x^k) - x
-            if diff >= 0:
+            if diff > 0:
                 S += diff
                 MDiff = min(MDiff, diff)
                 ct^=1
