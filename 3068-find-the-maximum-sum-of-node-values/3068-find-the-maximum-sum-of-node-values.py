@@ -4,7 +4,6 @@ class Solution:
         mDiff = -k
         MDiff = k
         ct = 0
-        flag=False
         for x in nums:
             diff = (x^k) - x
             if diff > 0:
@@ -13,11 +12,7 @@ class Solution:
                 ct^=1
             else:
                 mDiff=max(mDiff,diff)
-                flag=True
         if ct:
-            ans = S-MDiff
-            if flag:
-                ans = max(ans, S+mDiff)
+            return max(S-MDiff, S+mDiff)
         else:
-            ans = S
-        return ans
+            return S
