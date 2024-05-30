@@ -7,6 +7,5 @@ class Solution:
             v^=x
             a,b,c = d.get(v,(0,0,0))
             ans += a+(t-b-2)*c
-            a,b,c = d.get(v,(0,0,0))
             d[v] = (a+(t-b)*c+1,t,c+1)
         return ans
