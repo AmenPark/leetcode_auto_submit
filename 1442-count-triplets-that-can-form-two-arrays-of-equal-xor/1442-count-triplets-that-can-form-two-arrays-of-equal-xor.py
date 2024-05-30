@@ -1,14 +1,12 @@
 class Solution:
     def countTriplets(self, arr: List[int]) -> int:
-        s=[0]
+        d = {0:(1,-1,1)}
         v=0
-        for x in arr:
-            v^=x
-            s.append(v)
-        N=len(s)
         ans=0
-        for i in range(N-1):
-            for j in range(i+1,N):
-                if s[i]==s[j]:
-                    ans+=(j-i-1)
+        for t,x in enumerate(arr):
+            v^=x
+            a,b,c = d.get(v,(0,0,0))
+            ans += a+(t-b-2)*c
+            a,b,c = d.get(v,(0,0,0))
+            d[v] = (a+(t-b)*c+1,t,c+1)
         return ans
