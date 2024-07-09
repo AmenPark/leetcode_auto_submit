@@ -8,6 +8,8 @@ class Solution:
             if nnow > n:
                 if now==n:
                     nnow = (now//10) + 1
+                    while nnow%10==0:
+                        nnow//=10
                 elif now%10==9:
                     nnow = now+1
                     while nnow%10 == 0:
@@ -17,4 +19,5 @@ class Solution:
                 
             
             now=nnow
+        
         return l
