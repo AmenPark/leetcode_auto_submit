@@ -6,7 +6,7 @@
 #         self.right = right
 class Solution:
     def countPairs(self, root: TreeNode, distance: int) -> int:
-        ans = [0]
+        self.ans=0
         def getdic(nd):
             if not nd:
                 return {}
@@ -21,7 +21,7 @@ class Solution:
             for dist in range(distance-1):
                 ldval += ld.get(dist,0)
             for dist in range(distance-1):
-                ans[0] += ldval * rd.get(dist,0)
+                self.ans += ldval * rd.get(dist,0)
                 ldval -= ld.get(distance-2-dist,0)
             nd = {}
             for k,v in ld.items():
@@ -32,4 +32,4 @@ class Solution:
                     nd[k+1] = nd.get(k+1,0)+v
             return nd
         getdic(root)
-        return ans[0]
+        return self.ans
