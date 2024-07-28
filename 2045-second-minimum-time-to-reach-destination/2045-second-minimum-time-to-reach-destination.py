@@ -26,10 +26,11 @@ class Solution:
             tg=M+2
         else:
             tg=min(M,m+2)
-        ans = 0
-        for _ in range(tg):
-            if (ans//change)%2==1:
-                ans -= ans%change
-                ans+=change
-            ans+=time
-        return ans
+        N=change*2
+        mod = time%N
+        if mod==0:
+            return time*tg
+        mov = 1+((change-1)//mod)
+        startgap =(1+((mov*time-1)//N)) * N
+        cycles = (tg-1)//mov
+        return cycles*startgap + (tg-cycles*mov)*time
