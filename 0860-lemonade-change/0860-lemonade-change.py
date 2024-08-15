@@ -7,7 +7,7 @@ class Solution:
             elif b==10:
                 dct[10]+=1
                 dct[5]-=1
-                if dct[5]==-1:
+                if dct[5]<=-1:
                     return False
             else:
                 dct[20] += 1
@@ -16,6 +16,6 @@ class Solution:
                     dct[5]-=1
                 else:
                     dct[5]-=3
-                if dct[5]==-1:
+                if dct[5]<=-1:
                     return False
         return True
