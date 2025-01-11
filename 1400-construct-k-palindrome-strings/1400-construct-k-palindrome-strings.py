@@ -7,7 +7,7 @@ class Solution:
             ct[ch]=ct.get(ch,0)+1
         odds = 0
         for ch, num in ct.items():
-            if num%2:
+            if num&1:
                 odds+=1
         if odds>k:
             return False
