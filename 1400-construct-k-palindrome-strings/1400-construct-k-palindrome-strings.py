@@ -5,10 +5,9 @@ class Solution:
         ct={}
         for ch in s:
             ct[ch]=ct.get(ch,0)+1
-        odds = 0
         for ch, num in ct.items():
             if num&1:
-                odds+=1
-        if odds>k:
+                k-=1
+        if k>0:
             return False
         return True
