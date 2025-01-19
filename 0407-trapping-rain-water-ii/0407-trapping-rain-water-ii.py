@@ -13,61 +13,54 @@ class Solution:
             if j<M-1:
                 yield(i,j+1)
 
-        def fill_check(fills,flag):
-            while fills:
-                nf = []
-                for x,y in fills:
-                    for ni, nj in getNeighbor(x,y):
-                        if checker[ni][nj]==1 or checker[ni][nj]==flag:
-                            continue
-                        nf.append((ni,nj))
-                        checker[ni][nj]=flag
-                fills=nf
-                
-        hq = []
-        checker = [[0 for _ in range(M)] for _ in range(N)]
+        flagMap=[[0 for _ in range(M)] for _ in range(N)]
+        repr = {0:0}
+        areaInfos = {}
+        heightInfos = {}
+        isSideInfos = set()
+        flag=1
+        pos=[]
+        def getFlag(i):
+            if repr[i]==i:
+                return i
+            repr[i] = getFlag(repr[i])
+            return repr[i]
+        def unionFlag(i,j):
+            ii = getFlag(i)
+            jj = getFlag(j)
+            if ii==jj:
+                return
+            m,M = min(ii,jj),max(ii,jj)
+            areaInfos[m] += areaInfos[M]
+            repr[M] = m
+            
+
         for i,row in enumerate(heightMap):
             for j,val in enumerate(row):
-                heapq.heappush(hq, (-val,i,j))
-        flag = -1
-        while hq:
-            nval = hq[0][0]
-            while hq and nval==hq[0][0]:
-                _,i,j = heapq.heappop(hq)
-                checker[i][j]=1
-            
-            height = -nval
-            for i in range(N):
-                if checker[i][0]==flag or checker[i][0]==1:
+                pos.append((val,i,j))
+        pos.sort()
+        for v,i,j in pos:
+            isSide = False
+            if i==0 or j==0 or i==N-1 or j==M-1:
+                isSide=True
+            nflag = flag
+            repr[flag]=flag
+            heightInfos[flag]=v
+            areaInfos[flag]=1
+            for ni,nj in getNeighbor(i,j):
+                neflag = getFlag(flagMap[ni][nj])
+                if neflag==0:
                     continue
-                fills = [(i,0)]
-                checker[i][0]=flag
-                fill_check(fills,flag)
+                if neflag not in isSideInfos:
+                    ans += areaInfos[neflag]*(v-heightInfos[neflag])
+                else:
+                    isSide=True
+                unionFlag(neflag, nflag)
+                nflag=getFlag(nflag)
+                heightInfos[nflag]=v
+            flag+=1
+            if isSide:
+                isSideInfos.add(nflag)
+            flagMap[i][j]=nflag
 
-            for j in range(M):
-                if checker[0][j] == flag or checker[0][j] == 1:
-                    continue
-                fills=[(0,j)]
-                checker[0][j]=flag
-                fill_check(fills,flag)
-
-            for i in range(N):
-                if checker[i][M-1]==flag or checker[i][M-1]==1:
-                    continue
-                fills = [(i,M-1)]
-                checker[i][M-1]=flag
-                fill_check(fills,flag)
-
-            for j in range(M):
-                if checker[N-1][j] == flag or checker[N-1][j] == 1:
-                    continue
-                fills=[(N-1,j)]
-                checker[N-1][j]=flag
-                fill_check(fills,flag)
-
-            for i,row in enumerate(checker):
-                for j,val in enumerate(row):
-                    if val == flag+1:
-                        ans += height - heightMap[i][j]
-            flag-=1
         return ans
