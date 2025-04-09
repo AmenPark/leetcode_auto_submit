@@ -1,18 +1,13 @@
 class Solution:
     def minOperations(self, nums: List[int], k: int) -> int:
-        ct=[0]*101
+        d={}
         for n in nums:
-            ct[n]+=1
+            d[n]=d.get(n,0)+1
         ans=0
-        for i in range(101):
-            if ct[i]:
-                if i<k:
-                    return -1
-                break
-        ct[k]=0
-        for i in range(101):
-            if ct[i]==0:
-                continue
+        d[k]=0
+        del d[k]
+        for key,v in d.items():
+            if key<k:
+                return -1
             ans+=1
-
         return ans
