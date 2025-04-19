@@ -12,5 +12,4 @@ class Solution:
             if i>=low:
                 ans+=dp[i]
             i+=1
-        print(dp)
-        return ans
+        return ans % (10**9 + 7)
