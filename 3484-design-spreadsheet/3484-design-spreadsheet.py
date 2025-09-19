@@ -1,7 +1,7 @@
 class Spreadsheet:
 
     def __init__(self, rows: int):
-        self.data = [[0 for _ in range(26)] for _ in range(rows)]
+        self.data = [[0 for _ in range(26)] for _ in range(rows+1)]
     
     @staticmethod
     def cell2colrow(cell):
